@@ -2,9 +2,11 @@
 #     The file to be jointly edited by Team Members A and B
 
 from B import *
+from A import *
 
 def function_AB():
     
     print ("AB")
     function_B()
+    function_A()
  
