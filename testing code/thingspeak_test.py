@@ -19,7 +19,7 @@ def read_channel_feed():
     print(json.dumps(pull_data, indent = 4))
 
 def write_channel_feed():
-    update='&field1={}&field2={}&field3={}'.format(7.0,7.0,7.0)
+    update='&field1={}&field2={}&field3={}'.format(7.0,8.0,9.0)
 #Update channel data with HTTP GET or POST
     write_key='UU2HQ2WXR5L56DDK'
     url='https://api.thingspeak.com/update?api_key='
@@ -34,7 +34,7 @@ def write_channel_feed():
 #need to add try and catch logic for read and write error response (200)
 def read_channel_field():
     read_key='9SO0XFLPB59ODN5L'
-    url='https://api.thingspeak.com/channels/1160858/fields/1.json?api_key='
+    url='https://api.thingspeak.com/channels/1160858/fields/3.json?api_key='
     header='&results=2'
     url_ac=url+read_key+header
     print(url_ac)
