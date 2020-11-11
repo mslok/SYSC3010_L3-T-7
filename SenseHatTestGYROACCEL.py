@@ -1,38 +1,39 @@
 from sense_hat import SenseHat
+import http.client
+import urllib.parse
 import time
+key = "OBGBKNICJSMTDX1G"
+
 
 sense = SenseHat()
 
 red = (255, 0, 0)
 
-#code example from Device Plus Editorial Team
-
-while True:
-    orientation = sense.get_orientation()
-    p = round(orientation["pitch"], 0)
-    r = round(orientation["roll"], 0)
-    y = round(orientation["yaw"], 0)
-    
-    #print("p: %s, r: %s, y: %s" % (p,r,y))
-    
-    #raw = sense.get_accelerometer_raw()
-    #print("x: {x}, y: {y}, z: {z}".format(**raw))
-    
-    accel = sense.get_accelerometer_raw()
-    x = accel['x']
-    y = accel['y']
-    z = accel['z']
-    
-    x = abs(x)
-    y = abs(y)
-    z = abs(z)
-    
-    if z > 1:
-        sense.show_letter("!", red)
-    else:
-        sense.clear()
-    #print("x: %s, y: %s, z: %s" % (x,y,z))
-    
-    raw = sense.get_compass_raw()
-    #print("x: {x}, y: {y}, z: {z}".format(**raw))
-    #time.sleep(0.1)
+def getBumpData():
+    while True:
+        
+        accel = sense.get_accelerometer_raw()
+        #x = abs(accel['x'])
+        #y = abs(accel['y'])
+        z = abs(accel['z'])
+        if z > 1:
+            sense.show_letter("!", red)
+        else:
+            sense.clear()
+        params = urllib.parse.urlencode({'field1': z, 'key':key }) 
+        headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
+        conn = http.client.HTTPConnection("api.thingspeak.com:80")
+        try:
+            conn.request("POST", "/update", params, headers)
+            response = conn.getresponse()
+            print (z)
+            print (response.status,    response.reason)
+            data = response.read()
+            conn.close()
+        except:
+            print ("connection failed")
+        break
+if __name__ == "__main__":
+        while True:
+            getBumpData()
+            time.sleep(0.125)   
