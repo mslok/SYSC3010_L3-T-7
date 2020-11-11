@@ -12,42 +12,51 @@ def read_channel_feed():
     read_key='9SO0XFLPB59ODN5L'
     url='https://api.thingspeak.com/channels/1160858/feeds.json?api_key='
     header='&results=2'
-
-    url_ac=url + read_key + header
-
+    url_ac=url+read_key+header
     print(url_ac)
-    
-    pull_data = requests.get(url_ac).json()
+
+    pull_data=requests.get(url_ac).json()
     print(json.dumps(pull_data, indent = 4))
 
 def write_channel_feed():
     update='&field1={}&field2={}&field3={}'.format(7.0,7.0,7.0)
-    
 #Update channel data with HTTP GET or POST
     write_key='UU2HQ2WXR5L56DDK'
     url='https://api.thingspeak.com/update?api_key='
 #write custom header parse later 
     header=update
     url_ac=url + write_key + header
-    
     print(url_ac)
+
     data=urllib.request.urlopen(url_ac)
     print(data)
-    
+
 #need to add try and catch logic for read and write error response (200)
 def read_channel_field():
-	read_key='9SO0XFLPB59ODN5L'
+    read_key='9SO0XFLPB59ODN5L'
+    url='https://api.thingspeak.com/channels/1160858/fields/1.json?api_key='
+    header='&results=2'
+    url_ac=url+read_key+header
+    print(url_ac)
 
+    pull_data=requests.get(url_ac).json()
+    channel_id=pull_data['channel']['id']
+    print(channel_id)
+    
+    field_1=pull_data['feeds']
+    print(json.dumps(field_1, indent=4))
+
+    
 def read_channel_status():
 	return 0
 
 def main():
     write_channel_feed()
     read_channel_feed()
-    
+    read_channel_field()
+
 
 if __name__ == "__main__":
-
     main()
 
 
