@@ -2,7 +2,6 @@ import http.client
 import urllib.parse
 import requests
 import json
-from pprint import pprint
 
 #my read api key 9SO0XFLPB59ODN5L
 #my write key UU2HQ2WXR5L56DDK
