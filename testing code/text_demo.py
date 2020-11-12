@@ -29,7 +29,7 @@ def analyze_field(api_key,channel_id,field_id):
 	url = 'https://api.thingspeak.com/channels/'+channel+'/field/'+num+ '.json?api_key='+key+'&results=8000'
 	
 	pull_data=requests.get(url).json()
-	field_1=pull_data
+	field=pull_data
 	#print(field_1)
 	
 	total=0
@@ -37,15 +37,17 @@ def analyze_field(api_key,channel_id,field_id):
 	
 	print("Accelerometer readings:")
 	
-	for i in field_1['feeds']:
+	for i in field['feeds']:
 		temp=i['field1']
 		print(temp)
 		total=total+float(temp)
 		n=n+1
 	
-	avg=total/n
-	print("The average value is: " + str(avg))
-	
+	if n !=0:
+		avg=total/n
+		print("The average value is: " + str(avg))
+	else: 
+		print("No data to be anazlyzed, channel empty.")
 
 def main():
 	ret_json=read_channel('WQUCC93KDMBOY6V5','1223588')
