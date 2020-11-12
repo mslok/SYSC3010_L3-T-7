@@ -11,6 +11,9 @@ import json
 #mikes write api key OBGBKNICJSMTDX1G
 #mikes channel id 1223588
 
+#ambars read api key B4B863GDK58LVJGP
+#amabrs channel id 1226682
+
 #simply prints channel data and feeds 
 def read_channel(api_key,channel_id):
 	key=api_key
@@ -49,10 +52,10 @@ def analyze_field(api_key,channel_id,field_id):
 		print("No data to be anazlyzed, channel empty.")
 
 def main():
-	ret_json=read_channel('WQUCC93KDMBOY6V5','1223588')
+	ret_json=read_channel('B4B863GDK58LVJGP','1226682')
 	disp_text=json.dumps(ret_json, indent=4)
 	print(disp_text)
-	analyze_field('WQUCC93KDMBOY6V5','1223588','1')
+	analyze_field('B4B863GDK58LVJGP','1226682','1')
 	
 	
 if __name__ == "__main__":
