@@ -14,7 +14,8 @@ import json
 #ambars read api key B4B863GDK58LVJGP
 #amabrs channel id 1226682
 
-#simply prints channel data and feeds 
+#simply prints channel data and feeds
+
 def read_channel(api_key,channel_id):
 	key=api_key
 	channel=channel_id
