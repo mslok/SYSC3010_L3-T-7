@@ -14,12 +14,12 @@ def getData(api_key,channel_id):
 	
 	return pull_data
 	
-def getField(tdata):
+def getField(tdata,fnum):
 #Prints the field values in a feed
-
+	txt=fnum
 	pull_data=tdata
 	feed='feeds'
-	field='field1'
+	field='field'+'{}'.format(txt)
 	
 	for i in pull_data[feed]:
 		temp=i[field]
@@ -27,9 +27,10 @@ def getField(tdata):
 		
 def getLast(api_key,channel_id):
 #returns the latest entry in the thingspeak channel
+	
 	key=api_key
 	channel=channel_id
-	url = 'https://api.thingspeak.com/channels/'+channel+'/fields/field1/last.json?key='+key+'&results=8000'
+	url = 'https://api.thingspeak.com/channels/'+channel+'/fields/field1/last.json?				   key='+key+'&results=8000'
 	
 	pull_data=requests.get(url).json()
 	
@@ -39,6 +40,7 @@ def getLast(api_key,channel_id):
 
 def newSetting(api_key,channel_id,param):
 #writes a new car setting to the config thingspeak
+	
 	setting=param
 	key=api_key
 	channel=channel_id
@@ -51,6 +53,7 @@ def newSetting(api_key,channel_id,param):
 	
 def getAddress(lt,ln): 
 #returns the street address of a set of coordinates
+	
 	latitude=lt
 	longitude=ln
 	
@@ -72,6 +75,8 @@ def combine(api_key,channel_id):
 	return(0)
 
 def main():
-	return(0)
+	x=getData('9SO0XFLPB59ODN5L','1160858')
+	y=getField(x,'4')
+	print(y)
 if __name__ == "__main__":
 	main()
