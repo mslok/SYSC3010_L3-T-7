@@ -25,11 +25,11 @@ def getField(tdata):
 		temp=i[field]
 		print(temp)
 		
-def getSetting(api_key,channel_id):
-#returns the latest setting from the config thingspeak
+def getLast(api_key,channel_id):
+#returns the latest entry in the thingspeak channel
 	key=api_key
 	channel=channel_id
-	url = 'https://api.thingspeak.com/channels/'+channel+'/fields/field1/last?key='+key
+	url = 'https://api.thingspeak.com/channels/'+channel+'/fields/field1/last.json?key='+key+'&results=8000'
 	
 	pull_data=requests.get(url).json()
 	
