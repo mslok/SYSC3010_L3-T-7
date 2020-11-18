@@ -37,10 +37,18 @@ def getLast(api_key,channel_id):
 
 	return pull_data
 
-def newSetting(api_key,channel_id,setting):
+def newSetting(api_key,channel_id,param):
 #writes a new car setting to the config thingspeak
-	return 0
-	i
+	setting=param
+	key=api_key
+	channel=channel_id
+	
+	update='&field4={}'.format(setting)
+	url='https://api.thingspeak.com/update?api_key='+key+update
+	
+	data=urllib.request.urlopen(url)
+	return data
+	
 def getAddress(lt,ln): 
 #returns the street address of a set of coordinates
 	latitude=lt
@@ -60,10 +68,10 @@ def getAddress(lt,ln):
 		temp=i['address']['label']
 		return temp
 
+def combine(api_key,channel_id):
+	return(0)
+
 def main():
-	lat='45.3694076'
-	lng='-75.7030896'
-	x=getAddress(lat,lng)
-	print(x)
+	return(0)
 if __name__ == "__main__":
 	main()
