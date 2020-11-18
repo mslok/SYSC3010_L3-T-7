@@ -47,7 +47,7 @@ def readFile():
 	return 0
 
 def main():
-	x=getSetting('WQUCC93KDMBOY6V5','1223588')
+	x=getData('9SO0XFLPB59ODN5L','1160858')
 	print(x)
 if __name__ == "__main__":
 	main()
