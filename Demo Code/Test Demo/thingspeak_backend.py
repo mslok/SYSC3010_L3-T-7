@@ -40,32 +40,30 @@ def getLast(api_key,channel_id):
 def newSetting(api_key,channel_id,setting):
 #writes a new car setting to the config thingspeak
 	return 0
+	i
 def getAddress(lt,ln): 
-#45.3694076', 'field3': '-75.7030896
-# api-endpoint
-	URL = "https://revgeocode.search.hereapi.com/v1/revgeocode"
-
-#API key
-	api_key = 'QIb2IpsnEhXcnrbXrkTmErXA3PwNMTzUkX0HKdnuc4A'
-
+#returns the street address of a set of coordinates
 	latitude=lt
 	longitude=ln
 	
+	URL = "https://revgeocode.search.hereapi.com/v1/revgeocode"
+	api_key = 'QIb2IpsnEhXcnrbXrkTmErXA3PwNMTzUkX0HKdnuc4A'
 	PARAMS = {
 				'at': '{},{}'.format(latitude,longitude),
 				'apikey': api_key
              }
-# Sending get request and saving the response as response object 
-	r = requests.get(url = URL, params = PARAMS) 
-  
-# Extracting data in json format 
+
+	r = requests.get(url = URL, params = PARAMS)
 	data = r.json() 
 
-#Taking out title from JSON
-	y=json.dumps(data, indent=4)
-	
-	return(y)
+	for i in data['items']:
+		temp=i['address']['label']
+		return temp
+
 def main():
-	return(0)
+	lat='45.3694076'
+	lng='-75.7030896'
+	x=getAddress(lat,lng)
+	print(x)
 if __name__ == "__main__":
 	main()
