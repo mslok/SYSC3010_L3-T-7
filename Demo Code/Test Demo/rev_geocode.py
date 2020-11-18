@@ -1,4 +1,5 @@
 import requests
+import json
 #45.3694076', 'field3': '-75.7030896
 # api-endpoint
 URL = "https://revgeocode.search.hereapi.com/v1/revgeocode"
@@ -23,5 +24,6 @@ data = r.json()
 
 #Taking out title from JSON
 
+y=json.dumps(data, indent=4)
 
-print(data)
+print(y)
