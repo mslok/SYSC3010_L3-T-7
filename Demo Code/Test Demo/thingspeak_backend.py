@@ -4,7 +4,7 @@ import requests
 import json
 
 def getData(api_key,channel_id):
-#Pulls data from a Thingspeak channel.
+#Pulls data from an entire Thingspeak channel.
 	
 	key=api_key
 	channel=channel_id
@@ -39,6 +39,7 @@ def getSetting(api_key,channel_id):
 
 def newSetting(api_key,channel_id,setting):
 #writes a new car setting to the config thingspeak
+	return 0
 def getAddress(): 
 	return 0
 
