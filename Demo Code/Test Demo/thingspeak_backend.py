@@ -30,7 +30,7 @@ def getLast(api_key,channel_id):
 	
 	key=api_key
 	channel=channel_id
-	url = 'https://api.thingspeak.com/channels/'+channel+'/fields/field1/last.json?				   key='+key+'&results=8000'
+	url = 'https://api.thingspeak.com/channels/'+channel+'/fields/field1/last.json?				  key='+key+'&results=8000'
 	
 	pull_data=requests.get(url).json()
 	
@@ -45,7 +45,7 @@ def newSetting(api_key,channel_id,param):
 	key=api_key
 	channel=channel_id
 	
-	update='&field4={}'.format(setting)
+	update='&field1={}'.format(setting)
 	url='https://api.thingspeak.com/update?api_key='+key+update
 	
 	data=urllib.request.urlopen(url)
@@ -71,12 +71,27 @@ def getAddress(lt,ln):
 		temp=i['address']['label']
 		return temp
 
-def combine(api_key,channel_id):
-	return(0)
+def combine(api_key,channel_id, filename='local.json'):
+#combines data from thingspeak and address info into a local json
+	
+	key=api_key
+	channel=channel_id
+	url = 'https://api.thingspeak.com/channels/'+channel+'/feeds.json?api_key='+key+'&results=8000'
+	
+	data=requests.get(url).json()
+	
+	
+	
+	for i in data['feeds']:
+		acc=i['field1']
+		lat=i['field2']
+		lon=i['field3']
+	
+	print(json.dumps(data))	
 
 def main():
-	x=getData('9SO0XFLPB59ODN5L','1160858')
-	y=getField(x,'4')
-	print(y)
+	
+	combine('9SO0XFLPB59ODN5L','1160858')
+	
 if __name__ == "__main__":
 	main()
