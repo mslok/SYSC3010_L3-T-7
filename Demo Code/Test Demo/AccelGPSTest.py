@@ -5,6 +5,7 @@ import requests
 import json
 import time
 import serial
+from random import uniform
 #key = "OBGBKNICJSMTDX1G"
 
 
@@ -69,27 +70,27 @@ def getBumpData():
     while True:
         
         accel = sense.get_accelerometer_raw()
-        #x = abs(accel['x'])
-        #y = abs(accel['y'])
         z = abs(accel['z'])
         if z > 1:
             sense.show_letter("!", red)
         else:
             sense.clear()
-        latlng = getLatLng(lines[3], lines[5])
-        lat1 = float(latlng[0])
-        long1 = (float(latlng[1])*-1)
-#         update='&field1={}&field2={}&field3={}'.format(z, lat1, long1)
-#         #Update channel data with HTTP GET or POST
-#         write_key='UU2HQ2WXR5L56DDK'
-#         url='https://api.thingspeak.com/update?api_key='
-#         #write custom header parse later 
-#         header=update
-#         url_ac=url + write_key + header
-#         print(url_ac)
-# 
-#         data=urllib.request.urlopen(url_ac)
-#         print(data)
+        lat1 = uniform(40, 50)
+        long1 = (uniform(60, 70)*-1)
+#         latlng = getLatLng(lines[3], lines[5])
+#         lat1 = float(latlng[0])
+#         long1 = (float(latlng[1])*-1)
+        update='&field1={}&field2={}&field3={}'.format(z, lat1, long1)
+        #Update channel data with HTTP GET or POST
+        write_key='UU2HQ2WXR5L56DDK'
+        url='https://api.thingspeak.com/update?api_key='
+        #write custom header parse later 
+        header=update
+        url_ac=url + write_key + header
+        print(url_ac)
+
+        data=urllib.request.urlopen(url_ac)
+        print(data)
         print(z)
         print(long1)
         print(lat1)

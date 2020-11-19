@@ -33,7 +33,7 @@ def getGPS():
 
 
 if __name__ == "__main__":
-    ser = serial.Serial('/dev/ttyACM1', 9600, timeout=1)  # Open Serial port for GPS
+    ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)  # Open Serial port for GPS
     try:
         while True:
             line = readString()
