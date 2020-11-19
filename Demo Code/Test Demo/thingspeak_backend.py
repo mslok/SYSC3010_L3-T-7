@@ -80,18 +80,33 @@ def combine(api_key,channel_id, filename='local.json'):
 	
 	data=requests.get(url).json()
 	
-	
-	
 	for i in data['feeds']:
+		
 		acc=i['field1']
 		lat=i['field2']
 		lon=i['field3']
-	
-	print(json.dumps(data))	
-
+		
+		address=getAddress(lat,lon)
+		
+		with open('local.json') as json_file:
+			
+			event=json.load(json_file)
+			temp=event['events']
+			
+			e={
+			"G's":'{}'.format(lat),
+			"LAT":'{}'.format(lat),
+			"LONG":'{}'.format(lon),
+			"ADDRESS":'{}'.format(address)
+			  }
+			
+			temp.append(e)
+		with open('local.json','w') as f:
+			json.dump(event,f,indent=4)
+		
 def main():
-	
+
 	combine('9SO0XFLPB59ODN5L','1160858')
-	
+
 if __name__ == "__main__":
 	main()
