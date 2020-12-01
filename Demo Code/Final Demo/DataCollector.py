@@ -1,3 +1,6 @@
+
+
+
 from sense_hat import SenseHat
 import sense_hat
 import http.client
@@ -23,21 +26,10 @@ g,g,g,g,g,g,g,g,
 g,g,g,g,g,g,g,g,
 ]
 
-wait = [
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-r,r,r,r,r,r,r,r,
-]
-
 sense = SenseHat()
 pressed = sense_hat.ACTION_PRESSED
-sense.set_pixels(wait)
-run = 0
+sense.clear()
+run = 1
 
 def readString():
     while 1:
@@ -52,8 +44,6 @@ def getLatLng(latString, lngString):
     return lat, lng
     
 def getBumpData():
-    while True:
-        
         accel = sense.get_accelerometer_raw()
         z = abs(accel['z'])
         if z > 1.2:
@@ -77,34 +67,31 @@ def getBumpData():
             print(z)
             print(long1)
             print(lat1)
-        
-        for event in sense.stick.get_events():
-                if event.action == pressed:
-                    if run == 1:
-                        break
-        
-        
-def Start():
-    sense.set_pixels(ready)
-    run = 1
-    
-def Stop():
-    sense.set_pixels(wait)
-    run = 0
+            sense.set_pixels(ready)
+            
+def startStop():
+    for event in sense.stick.get_events():
+        if event.action == pressed:
+            global run
+            if run == 1:
+                sense.set_pixels(ready)
+                run = 2
+            elif run == 2:
+                sense.clear()
+                run = 1
+
      
 if __name__ == "__main__":
     ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)  # Open Serial port
     try:
-        while True:  
+        while True:
+            startStop()
             line = readString()
             lines = line.split(",")
-            for event in sense.stick.get_events():
-                if event.action == pressed:
-                    if run == 0:
-                        Start()
-                        getBumpData()
-                        Stop()
-                                                
+            if run == 2:
+                getBumpData()
+            
+                    
     except KeyboardInterrupt:
         print('Exiting Script')
         
