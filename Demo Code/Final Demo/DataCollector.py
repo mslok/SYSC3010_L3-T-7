@@ -39,20 +39,29 @@ def readString():
         return line
     
 def getLatLng(latString, lngString):
-    lat = latString[:2].lstrip('0')+"."+"%.7s"%str(float(latString[2:])*1.0/60.0).lstrip("0.")
-    lng = lngString[:3].lstrip('0')+"."+"%.7s"%str(float(lngString[3:])*1.0/60.0).lstrip("0.")
-    return lat, lng
+    while True:
+        try:
+            lat = latString[:2].lstrip('0')+"."+"%.7s"%str(float(latString[2:])*1.0/60.0).lstrip("0.")
+            lng = lngString[:3].lstrip('0')+"."+"%.7s"%str(float(lngString[3:])*1.0/60.0).lstrip("0.")
+            print("Current GPS Location")
+            return lat, lng
+        except ValueError:
+            print("Couldn't get a GPS lock. Using Random Ottawa values")
+            lat1 = uniform(44, 46)
+            long1 = (uniform(74, 76)*-1)
+            return lat1, long1
+            
     
 def getBumpData():
         accel = sense.get_accelerometer_raw()
         z = abs(accel['z'])
         if z > 1.2:
             sense.show_letter("!", r)
-            lat1 = uniform(40, 50)
-            long1 = (uniform(60, 70)*-1)
-#           latlng = getLatLng(lines[3], lines[5])
-#           lat1 = float(latlng[0])
-#           long1 = (float(latlng[1])*-1)
+#             lat1 = uniform(40, 50)
+#             long1 = (uniform(60, 70)*-1)
+            latlng = getLatLng(lines[3], lines[5])           
+            lat1 = float(latlng[0])
+            long1 = (float(latlng[1])*-1)
             update='&field1={}&field2={}&field3={}'.format(z, lat1, long1)
             #Update channel data with HTTP GET or POST
             write_key='OBGBKNICJSMTDX1G'          #'UU2HQ2WXR5L56DDK' Alex's channel
