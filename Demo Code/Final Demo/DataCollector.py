@@ -47,8 +47,8 @@ def getLatLng(latString, lngString):
             return lat, lng
         except ValueError:
             print("Couldn't get a GPS lock. Using Random Ottawa values")
-            lat1 = uniform(44, 46)
-            long1 = (uniform(74, 76)*-1)
+            lat1 = uniform(45.45, 45.46)
+            long1 = (uniform(75.51, 75.52)*-1)
             return lat1, long1
             
     
