@@ -4,30 +4,23 @@ import http.client
 import urllib.parse
 import requests
 import json
-
-#my read api key 9SO0XFLPB59ODN5L
-#my write key UU2HQ2WXR5L56DDK
-#my channel id 1160858
-
-#mikes read api key WQUCC93KDMBOY6V5
-#mikes write api key OBGBKNICJSMTDX1G
-#mikes channel id 1223588
-
-#ambars read api key B4B863GDK58LVJGP
-#amabrs channel id 1226682
-
-#simply prints channel data and feeds 
-
-
+import folium
+import webbrowser
 
 
 class Table: 
 
 	def __init__(self,root): 
 		# code for creating table 
+		
+		list = root.grid_slaves()
+		for l in list:
+			l.destroy()
+
+
 		for i in range(total_rows): 
 			for j in range(total_columns):   
-				self.e = Entry(root, width=20, fg='blue', font=('Arial',16,'bold')) 
+				self.e = Entry(root, width=20, fg='black', font=('Arial',16,'bold')) 
 				self.e.grid(row=i, column=j) 
 				#print(TabladeDatos[i][j])
 				if TabladeDatos[i][j] is not None:
@@ -39,20 +32,16 @@ class Table:
 				
 				
 TabladeDatos = [ ]
-a = [' ',' ',' ',' ',' ',' ']
+a = [' ',' ',' ',' ']
 TabladeDatos.append(a)
-a = ['ID','G Force','Long','Lat','Direccion', 'Time']
+a = ['G Force','LAT','LONG','Direction']
 #a = [' ',' ',' ',' ',' ',' ']
 TabladeDatos.append(a)
 
-lst = []
-a = [' ',' ',' ',' ',' ']
-lst.append(a)
 
-a = ['ID','G Force','Long','Lat','Time']
-lst.append(a)
 
 def read_channel(api_key,channel_id):
+
 	key=api_key
 	channel=channel_id
 	url = 'https://api.thingspeak.com/channels/'+channel+'/feeds.json?api_key='+key+'&results=8000'
@@ -97,7 +86,7 @@ def getAddress(lt,ln):
 	PARAMS = {
 				'at': '{},{}'.format(latitude,longitude),
 				'apikey': api_key
-             }
+				}
 
 	r = requests.get(url = URL, params = PARAMS)
 	data = r.json() 
@@ -109,37 +98,58 @@ def getAddress(lt,ln):
 
 
 def main():
-	ret_json=read_channel('9SO0XFLPB59ODN5L','1160858')
+	#ret_json=read_channel('9SO0XFLPB59ODN5L','1160858')
 	#disp_text=json.dumps(ret_json, indent=4)
+	filename='markers.json'
 
-	#print(ret_json)
-	print("Inicio de todos mis feeds de datos")
-	
-	for feed in ret_json['feeds']: 
-		temporal = getAddress(feed['field2'],feed['field3'])
-		a= [feed['entry_id'],feed['field1'],feed['field2'],feed['field3'],feed['created_at']]
-		lst.append(a)
-		
-		#print (temporal)
-		a=[feed['entry_id'],feed['field1'],feed['field2'],feed['field3'], temporal,feed['created_at']]
+	with open(filename) as map_marker_data:
+		data=json.load(map_marker_data)
+
+
+	for i in data:
+		temporal = getAddress(i['LAT'],i['LONG'])
+		a=[i["G's"],i['LAT'],i['LONG'],i['ADDRESS'], temporal]
 		TabladeDatos.append(a)
 	print(TabladeDatos)
+	
+	#print(ret_json)
+	#print("Inicio de todos mis feeds de datos")
+	
+	#for feed in ret_json['events']: 
+	#	temporal = getAddress(feed['LAT'],feed['LONG'])
+		#a= [feed['entry_id'],feed['field1'],feed['field2'],feed['field3'],feed['created_at']]
+		#lst.append(a)
+		
+		#print (temporal)
+	#	a=[feed["G's"],feed['LAT'],feed['LONG'],feed['ADDRESS'], temporal]
+	#	TabladeDatos.append(a)
+	#print(TabladeDatos)
 
 	
 	#analyze_field('9SO0XFLPB59ODN5L','1160858','1') 
-def hola():
-	print("Hello World!")
-
 def FilterTable(Datos, searchValue):
 	i=0
-	for element in Datos: 
-		if Datos[4] == searchValue:
+	for elemento in Datos: 
+		if elemento[4] == searchValue:
 			Datos.pop(i)
 		i+=1
 	return Datos
-3
+
+
+def openweb():
+	webbrowser.open('index.html')
+
 def printv():
-	print(entry_var.get())
+	TablaFiltrada = []
+	TablaFiltrada=FilterTable(TabladeDatos,entry_var.get())
+	print(TablaFiltrada)
+
+	total_rows= len(TablaFiltrada)
+	total_columns= len(TablaFiltrada[0])
+
+	t = Table(root) 
+
+
 
 	
 if __name__ == "__main__":
@@ -149,19 +159,19 @@ if __name__ == "__main__":
 	# columns in list 
 	total_rows = len(TabladeDatos) 
 	total_columns = len(TabladeDatos[0]) 
+
+	
 	
 	# create root window 
 	root = Tk() 
 	
 	t = Table(root) 
 	
-	Button(root, text="Show Data", command=hola).grid(column=0, row=0)
 	entry_var= StringVar()
+	
+	
 	entry=Entry(root, textvariable=entry_var).grid(column=1, row=0)
-
 	Button(root, text="Submit", command=printv).grid(column=2, row=0)
-	FilterTable(TabladeDatos, "Annapolis, NS, Canada")
-	
-	
-		
+	Button(root, text="Map", command=openweb).grid(column=3, row=0)
 	root.mainloop()
+
