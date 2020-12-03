@@ -61,10 +61,10 @@ def getBumpData():
 #             long1 = (uniform(60, 70)*-1)
             latlng = getLatLng(lines[3], lines[5])           
             lat1 = float(latlng[0])
-            long1 = (float(latlng[1])*-1)
+            long1 = float(latlng[1])
             update='&field1={}&field2={}&field3={}'.format(z, lat1, long1)
             #Update channel data with HTTP GET or POST
-            write_key='OBGBKNICJSMTDX1G'          #'UU2HQ2WXR5L56DDK' Alex's channel
+            write_key='UU2HQ2WXR5L56DDK' #Alex's channel 'OBGBKNICJSMTDX1G' Michael Channel          
             url='https://api.thingspeak.com/update?api_key='
             #write custom header parse later 
             header=update
