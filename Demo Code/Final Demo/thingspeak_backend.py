@@ -94,7 +94,7 @@ def combine(api_key,channel_id, filename='local.json'):
 			temp=event['events']
 			
 			e={
-			"G's":'{}'.format(lat),
+			"G's":'{}'.format(acc),
 			"LAT":'{}'.format(lat),
 			"LONG":'{}'.format(lon),
 			"ADDRESS":'{}'.format(address)
