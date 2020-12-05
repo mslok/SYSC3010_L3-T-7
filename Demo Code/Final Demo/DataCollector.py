@@ -31,13 +31,16 @@ pressed = sense_hat.ACTION_PRESSED
 sense.clear()
 run = 1
 
+
+# Readstring code originally written by: Lauszus on github
 def readString():
     while 1:
         while ser.read().decode("utf-8") != '$':  # Wait for the begging of the string
             pass  # Do nothing
         line = ser.readline().decode("utf-8")  # Read the entire string
         return line
-    
+  
+# getLatLng lines 47 & 48 code originally written by: Lauszus on github
 def getLatLng(latString, lngString):
     while True:
         try:
