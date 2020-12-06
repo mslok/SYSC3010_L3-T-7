@@ -24,10 +24,8 @@ class Table:
 				self.e.grid(row=i, column=j) 
 				#print(TabladeDatos[i][j])
 				if TabladeDatos[i][j] is not None:
-					#print("No es Vacio")
 					self.e.insert(END, TabladeDatos[i][j])
 				else:
-					#print("Es vacio")
 					self.e.insert(END, "Sin coordenadas")
 				
 				
@@ -112,8 +110,6 @@ def main():
 		TabladeDatos.append(a)
 	print(TabladeDatos)
 	
-	#print(ret_json)
-	#print("Inicio de todos mis feeds de datos")
 	
 	#for feed in ret_json['events']: 
 	#	temporal = getAddress(feed['LAT'],feed['LONG'])
@@ -127,13 +123,13 @@ def main():
 
 	
 	#analyze_field('9SO0XFLPB59ODN5L','1160858','1') 
-def FilterTable(Datos, searchValue):
+def FilterTable(Data, searchValue):
 	i=0
-	for elemento in Datos: 
+	for elemento in Data: 
 		if elemento[4] == searchValue:
 			Datos.pop(i)
 		i+=1
-	return Datos
+	return Data
 
 
 def openweb():
