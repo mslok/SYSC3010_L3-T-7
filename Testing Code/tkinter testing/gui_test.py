@@ -6,7 +6,7 @@ import requests
 import json
 import folium
 import webbrowser
-
+import thingspeak_test.py
 
 class Table: 
 
@@ -38,63 +38,14 @@ TabladeDatos.append(a)
 
 
 
-def read_channel(api_key,channel_id):
+read_channel(api_key,channel_id):
 
-	key=api_key
-	channel=channel_id
-	url = 'https://api.thingspeak.com/channels/'+channel+'/feeds.json?api_key='+key+'&results=8000'
-	pull_data=requests.get(url).json()
-	return pull_data
-
-def analyze_field(api_key,channel_id,field_id):
-	key=api_key
-	channel=channel_id
-	num=field_id
-	url = 'https://api.thingspeak.com/channels/'+channel+'/field/'+num+ '.json?api_key='+key+'&results=8000'
-	pull_data=requests.get(url).json()
-	field=pull_data
-	#print(field_1)
-	total=0
-	n=0
+analyze_field(api_key,channel_id,field_id):
 	
-	print("Accelerometer readings:")
 	
-	for i in field['feeds']:
-		temp=i['field1']
-		print(temp)
-		total=total+float(temp)
-		n=n+1
-	
-	if n !=0:
-		avg=total/n
-		print("The average value is: " + str(avg))
-	else:
-		print("No data to be analyzed, channel empty.")
-
+getAddress(lt,ln): 
 
 	
-def getAddress(lt,ln): 
-#returns the street address of a set of coordinates
-	
-	latitude=lt
-	longitude=ln
-	
-	URL = "https://revgeocode.search.hereapi.com/v1/revgeocode"
-	api_key = 'QIb2IpsnEhXcnrbXrkTmErXA3PwNMTzUkX0HKdnuc4A'
-	PARAMS = {
-				'at': '{},{}'.format(latitude,longitude),
-				'apikey': api_key
-				}
-
-	r = requests.get(url = URL, params = PARAMS)
-	data = r.json() 
-
-	for i in data['items']:
-		temp=i['address']['label']
-		return temp
-	
-
-
 def main():
 	#ret_json=read_channel('9SO0XFLPB59ODN5L','1160858')
 	#disp_text=json.dumps(ret_json, indent=4)
