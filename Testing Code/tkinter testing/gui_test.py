@@ -37,14 +37,6 @@ a = ['G Force','LAT','LONG','Direction']
 TabladeDatos.append(a)
 
 
-
-read_channel(api_key,channel_id):
-
-analyze_field(api_key,channel_id,field_id):
-	
-	
-getAddress(lt,ln): 
-
 	
 def main():
 	#ret_json=read_channel('9SO0XFLPB59ODN5L','1160858')
@@ -62,18 +54,13 @@ def main():
 	print(TabladeDatos)
 	
 	
-	#for feed in ret_json['events']: 
-	#	temporal = getAddress(feed['LAT'],feed['LONG'])
-		#a= [feed['entry_id'],feed['field1'],feed['field2'],feed['field3'],feed['created_at']]
-		#lst.append(a)
-		
-		#print (temporal)
-	#	a=[feed["G's"],feed['LAT'],feed['LONG'],feed['ADDRESS'], temporal]
-	#	TabladeDatos.append(a)
-	#print(TabladeDatos)
-
 	
-	#analyze_field('9SO0XFLPB59ODN5L','1160858','1') 
+	read_channel(api_key,channel_id);
+
+	analyze_field(api_key,channel_id,field_id);
+	
+	
+	getAddress(lt,ln);
 def FilterTable(Data, searchValue):
 	i=0
 	for elemento in Data: 
